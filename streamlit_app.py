@@ -1,4 +1,5 @@
 import streamlit as st
+
 from streamlit_image_coordinates import streamlit_image_coordinates
 
 st.set_page_config(
@@ -6,6 +7,13 @@ st.set_page_config(
     page_icon="🎯",
     layout="wide",
 )
+
+"# :dart: Streamlit Image Coordinates"
+
+st.code("pip install streamlit-image-coordinates")
+
+"Try clicking on any of the images below."
+
 col1, col2, col3 = st.columns(3)
 
 with col1:
