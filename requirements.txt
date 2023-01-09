@@ -1,2 +1,2 @@
 streamlit
-streamlit-image-coordinates
+streamlit-image-coordinates>=0.1.2
