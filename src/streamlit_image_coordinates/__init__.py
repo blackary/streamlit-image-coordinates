@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import base64
-import hashlib
 from io import BytesIO
 from pathlib import Path
 
@@ -50,15 +49,11 @@ def streamlit_image_coordinates(
     else:
         raise ValueError("Must pass a string, Path, or object with a save method")
 
-    _str_repr = f"streamlit_image_coordinates({src}, {height}, {width}, {key})"
-
-    _key = hashlib.md5(_str_repr.encode("utf-8")).hexdigest()
-
     component_value = _component_func(
         src=src,
         height=height,
         width=width,
-        key=_key,
+        key=key,
     )
 
     return component_value

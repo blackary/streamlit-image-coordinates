@@ -12,17 +12,21 @@ function sendValue(value) {
  * the component is initially loaded, and then again every time the
  * component gets new data from Python.
  */
-function onRender(event) {
-  // Only run the render code the first time the component is loaded.
-  if (!window.rendered) {
-    // You most likely want to get the data passed in like this
-    let {src, height, width} = event.detail.args
 
-    const img = document.getElementById("image")
+function clickListener(event) {
+  const {offsetX, offsetY} = event
+  sendValue({x: offsetX, y: offsetY})
+}
+
+function onRender(event) {
+  let {src, height, width} = event.detail.args
+
+  const img = document.getElementById("image")
+
+  if (img.src !== src || (height && img.height !== height) || (width && img.width !== width)) {
     img.src = src
 
     img.onload = () => {
-
       if (!width && !height) {
         width = img.naturalWidth
         height = img.naturalHeight
@@ -40,15 +44,9 @@ function onRender(event) {
       Streamlit.setFrameHeight(height)
 
       // When image is clicked, send the coordinates to Python through sendValue
-
-      img.addEventListener("click", (e) => {
-        const {offsetX, offsetY} = e
-        sendValue({x: offsetX, y: offsetY})
-      })
-
-      // You'll most likely want to pass some data back to Python like this
-      // sendValue({output1: "foo", output2: "bar"})
-      window.rendered = true
+      if (!img.onclick) {
+        img.onclick = clickListener
+      }
     }
   }
 }
@@ -57,5 +55,3 @@ function onRender(event) {
 Streamlit.events.addEventListener(Streamlit.RENDER_EVENT, onRender)
 // Tell Streamlit that the component is ready to receive events
 Streamlit.setComponentReady()
-// Render with the correct height, if this is a fixed-height component
-// Streamlit.setFrameHeight(100)
