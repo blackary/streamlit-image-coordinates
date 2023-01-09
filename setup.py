@@ -7,10 +7,13 @@ long_description = (this_directory / "README.md").read_text()
 
 setuptools.setup(
     name="streamlit-image-coordinates",
-    version="0.1.1",
+    version="0.1.2",
     author="Zachary Blackwood",
     author_email="zachary@streamlit.io",
-    description="Streamlit component that displays an image and returns the coordinates when you click on it",
+    description=(
+        "Streamlit component that displays an image and returns the coordinates when "
+        "you click on it"
+    ),
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(where="src"),

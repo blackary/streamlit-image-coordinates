@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import base64
 import hashlib
+from io import BytesIO
 from pathlib import Path
 
 import streamlit as st
@@ -17,7 +18,7 @@ _component_func = components.declare_component(
 
 # Create the python function that will be called
 def streamlit_image_coordinates(
-    source: str | Path,
+    source: str | Path | object,
     height: int | None = None,
     width: int | None = None,
     key: str | None = None,
@@ -27,7 +28,7 @@ def streamlit_image_coordinates(
 
     Parameters
     ----------
-    source : str | Path
+    source : str | Path | object
         The image source
     height : int | None
         The height of the image. If None, the height will be the original height
@@ -35,11 +36,19 @@ def streamlit_image_coordinates(
         The width of the image. If None, the width will be the original width
     """
 
-    if not str(source).startswith("http"):
-        content = Path(source).read_bytes()
-        src = "data:image/png;base64," + base64.b64encode(content).decode("utf-8")
+    if isinstance(source, Path) or isinstance(source, str):
+        if not str(source).startswith("http"):
+            content = Path(source).read_bytes()
+            src = "data:image/png;base64," + base64.b64encode(content).decode("utf-8")
+        else:
+            src = str(source)
+    elif hasattr(source, "save"):
+        buffered = BytesIO()
+        source.save(buffered, format="JPEG")  # type: ignore
+        src = "data:image/png;base64,"
+        src += base64.b64encode(buffered.getvalue()).decode("utf-8")  # type: ignore
     else:
-        src = str(source)
+        raise ValueError("Must pass a string, Path, or object with a save method")
 
     _str_repr = f"streamlit_image_coordinates({src}, {height}, {width}, {key})"
 

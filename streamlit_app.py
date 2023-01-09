@@ -1,4 +1,6 @@
 import streamlit as st
+from PIL import Image
+
 from streamlit_image_coordinates import streamlit_image_coordinates
 
 st.set_page_config(
@@ -6,7 +8,14 @@ st.set_page_config(
     page_icon="🎯",
     layout="wide",
 )
-col1, col2, col3 = st.columns(3)
+
+"# :dart: Streamlit Image Coordinates"
+
+st.code("pip install streamlit-image-coordinates")
+
+"Try clicking on any of the images below."
+
+col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     st.write("## Url example")
@@ -38,6 +47,17 @@ with col3:
             "kitty.jpeg",
             width=250,
             key="local2",
+        )
+
+        st.write(value)
+
+with col4:
+    st.write("PIL example")
+
+    with st.echo():
+        value = streamlit_image_coordinates(
+            Image.open("kitty.jpeg"),
+            key="pil",
         )
 
         st.write(value)
