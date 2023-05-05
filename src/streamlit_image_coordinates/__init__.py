@@ -43,7 +43,7 @@ def streamlit_image_coordinates(
             src = str(source)
     elif hasattr(source, "save"):
         buffered = BytesIO()
-        source.save(buffered, format="JPEG")  # type: ignore
+        source.save(buffered, format="PNG")  # type: ignore
         src = "data:image/png;base64,"
         src += base64.b64encode(buffered.getvalue()).decode("utf-8")  # type: ignore
     else:
