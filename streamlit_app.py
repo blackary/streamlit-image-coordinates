@@ -20,7 +20,7 @@ col1, col2, col3, col4 = st.columns(4)
 with col1:
     st.write("## Url example")
 
-    with st.echo():
+    with st.echo("below"):
         value = streamlit_image_coordinates(
             "https://placekitten.com/200/300",
             key="url",
@@ -31,7 +31,7 @@ with col1:
 with col2:
     st.write("## Local image example")
 
-    with st.echo():
+    with st.echo("below"):
         value = streamlit_image_coordinates(
             "kitty.jpeg",
             key="local",
@@ -42,7 +42,7 @@ with col2:
 with col3:
     st.write("## Custom size example")
 
-    with st.echo():
+    with st.echo("below"):
         value = streamlit_image_coordinates(
             "kitty.jpeg",
             width=250,
@@ -52,9 +52,9 @@ with col3:
         st.write(value)
 
 with col4:
-    st.write("PIL example")
+    st.write("## PIL example")
 
-    with st.echo():
+    with st.echo("below"):
         value = streamlit_image_coordinates(
             Image.open("kitty.jpeg"),
             key="pil",
