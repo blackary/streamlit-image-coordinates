@@ -19,7 +19,7 @@ _component_func = components.declare_component(
 
 # Create the python function that will be called
 def streamlit_image_coordinates(
-    source: str | Path | object,
+    source: str | Path | np.ndarray | object,
     height: int | None = None,
     width: int | None = None,
     key: str | None = None,
@@ -55,7 +55,9 @@ def streamlit_image_coordinates(
         src = "data:image/png;base64,"
         src += base64.b64encode(buffered.getvalue()).decode("utf-8")  # type: ignore
     else:
-        raise ValueError("Must pass a string, Path, or object with a save method")
+        raise ValueError(
+            "Must pass a string, Path, numpy array or object with a save method"
+        )
 
     component_value = _component_func(
         src=src,
