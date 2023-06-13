@@ -4,8 +4,10 @@ import base64
 from io import BytesIO
 from pathlib import Path
 
+import numpy as np
 import streamlit as st
 import streamlit.components.v1 as components
+from PIL import Image
 
 # Tell streamlit that there is a component called streamlit_image_coordinates,
 # and that the code to display that component is in the "frontend" folder
@@ -17,7 +19,7 @@ _component_func = components.declare_component(
 
 # Create the python function that will be called
 def streamlit_image_coordinates(
-    source: str | Path | object,
+    source: str | Path | np.ndarray | object,
     height: int | None = None,
     width: int | None = None,
     key: str | None = None,
@@ -46,8 +48,16 @@ def streamlit_image_coordinates(
         source.save(buffered, format="PNG")  # type: ignore
         src = "data:image/png;base64,"
         src += base64.b64encode(buffered.getvalue()).decode("utf-8")  # type: ignore
+    elif isinstance(source, np.ndarray):
+        image = Image.fromarray(source)
+        buffered = BytesIO()
+        image.save(buffered, format="PNG")  # type: ignore
+        src = "data:image/png;base64,"
+        src += base64.b64encode(buffered.getvalue()).decode("utf-8")  # type: ignore
     else:
-        raise ValueError("Must pass a string, Path, or object with a save method")
+        raise ValueError(
+            "Must pass a string, Path, numpy array or object with a save method"
+        )
 
     component_value = _component_func(
         src=src,
