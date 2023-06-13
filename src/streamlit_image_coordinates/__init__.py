@@ -4,8 +4,10 @@ import base64
 from io import BytesIO
 from pathlib import Path
 
+import numpy as np
 import streamlit as st
 import streamlit.components.v1 as components
+from PIL import Image
 
 # Tell streamlit that there is a component called streamlit_image_coordinates,
 # and that the code to display that component is in the "frontend" folder
@@ -44,6 +46,12 @@ def streamlit_image_coordinates(
     elif hasattr(source, "save"):
         buffered = BytesIO()
         source.save(buffered, format="PNG")  # type: ignore
+        src = "data:image/png;base64,"
+        src += base64.b64encode(buffered.getvalue()).decode("utf-8")  # type: ignore
+    elif isinstance(source, np.ndarray):
+        image = Image.fromarray(source)
+        buffered = BytesIO()
+        image.save(buffered, format="PNG")  # type: ignore
         src = "data:image/png;base64,"
         src += base64.b64encode(buffered.getvalue()).decode("utf-8")  # type: ignore
     else:
