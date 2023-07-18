@@ -41,7 +41,7 @@ function onRender(event) {
       img.width = width
       img.height = height
 
-      Streamlit.setFrameHeight(height)
+      Streamlit.setFrameHeight(height + 10)
 
       // When image is clicked, send the coordinates to Python through sendValue
       if (!img.onclick) {
