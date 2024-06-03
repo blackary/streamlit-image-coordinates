@@ -8,6 +8,7 @@ import numpy as np
 import streamlit as st
 import streamlit.components.v1 as components
 from PIL import Image
+from streamlit.elements.image import UseColumnWith
 
 # Tell streamlit that there is a component called streamlit_image_coordinates,
 # and that the code to display that component is in the "frontend" folder
@@ -23,6 +24,7 @@ def streamlit_image_coordinates(
     height: int | None = None,
     width: int | None = None,
     key: str | None = None,
+    use_column_width: UseColumnWith | str | None = None,
 ):
     """
     Take an image source and return the coordinates of the image clicked
@@ -35,6 +37,12 @@ def streamlit_image_coordinates(
         The height of the image. If None, the height will be the original height
     width : int | None
         The width of the image. If None, the width will be the original width
+    use_column_width : "auto", "always", "never", or bool
+            If "auto", set the image's width to its natural size,
+            but do not exceed the width of the column.
+            If "always" or True, set the image's width to the column width.
+            If "never" or False, set the image's width to its natural size.
+            Note: if set, `use_column_width` takes precedence over the `width` parameter.
     """
 
     if isinstance(source, Path) or isinstance(source, str):
@@ -63,6 +71,7 @@ def streamlit_image_coordinates(
         src=src,
         height=height,
         width=width,
+        use_column_width=use_column_width,
         key=key,
     )
 

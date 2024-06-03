@@ -61,3 +61,14 @@ with col4:
         )
 
         st.write(value)
+
+st.write("## Full width example")
+
+with st.echo("below"):
+    value = streamlit_image_coordinates(
+        "kitty.jpeg",
+        key="local4",
+        use_column_width="always",
+    )
+
+    st.write(value)
