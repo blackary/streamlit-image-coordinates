@@ -1,6 +1,5 @@
 import streamlit as st
 from PIL import Image
-
 from streamlit_image_coordinates import streamlit_image_coordinates
 
 st.set_page_config(
@@ -61,3 +60,14 @@ with col4:
         )
 
         st.write(value)
+
+st.write("## Full width example")
+
+with st.echo("below"):
+    value = streamlit_image_coordinates(
+        "kitty.jpeg",
+        key="local4",
+        use_column_width="always",
+    )
+
+    st.write(value)

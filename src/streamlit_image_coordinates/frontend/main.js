@@ -14,40 +14,53 @@ function sendValue(value) {
  */
 
 function clickListener(event) {
-  const {offsetX, offsetY} = event
-  sendValue({x: offsetX, y: offsetY})
+  const {offsetX, offsetY} = event;
+  const img = document.getElementById("image");
+
+  sendValue({x: offsetX, y: offsetY, width: img.width, height: img.height});
 }
 
 function onRender(event) {
-  let {src, height, width} = event.detail.args
+  let {src, height, width, use_column_width} = event.detail.args;
 
-  const img = document.getElementById("image")
+  const img = document.getElementById("image");
 
-  if (img.src !== src || (height && img.height !== height) || (width && img.width !== width)) {
-    img.src = src
+  if (img.src !== src) {
+    img.src = src;
+  }
 
-    img.onload = () => {
+  function resizeImage() {
+    img.classList.remove("auto", "fullWidth");
+    img.removeAttribute("width");
+    img.removeAttribute("height");
+
+    if (use_column_width === "always" || use_column_width === true) {
+      img.classList.add("fullWidth");
+    } else if (use_column_width === "auto") {
+      img.classList.add("auto");
+    } else {
       if (!width && !height) {
-        width = img.naturalWidth
-        height = img.naturalHeight
-      }
-      else if (!height) {
-        height = width * img.naturalHeight / img.naturalWidth
-      }
-      else if (!width) {
-        width = height * img.naturalWidth / img.naturalHeight
+        width = img.naturalWidth;
+        height = img.naturalHeight;
+      } else if (!height) {
+        height = width * img.naturalHeight / img.naturalWidth;
+      } else if (!width) {
+        width = height * img.naturalWidth / img.naturalHeight;
       }
 
-      img.width = width
-      img.height = height
-
-      Streamlit.setFrameHeight(height + 10)
-
-      // When image is clicked, send the coordinates to Python through sendValue
-      if (!img.onclick) {
-        img.onclick = clickListener
-      }
+      img.width = width;
+      img.height = height;
     }
+
+    Streamlit.setFrameHeight(img.height + 10);
+  }
+
+  img.onload = resizeImage;
+  window.addEventListener("resize", resizeImage);
+
+  // When image is clicked, send the coordinates to Python through sendValue
+  if (!img.onclick) {
+    img.onclick = clickListener;
   }
 }
 
