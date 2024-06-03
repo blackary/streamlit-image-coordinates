@@ -45,7 +45,7 @@ def streamlit_image_coordinates(
             Note: if set, `use_column_width` takes precedence over the `width` parameter.
     """
 
-    if isinstance(source, Path) or isinstance(source, str):
+    if isinstance(source, (Path, str)):
         if not str(source).startswith("http"):
             content = Path(source).read_bytes()
             src = "data:image/png;base64," + base64.b64encode(content).decode("utf-8")
@@ -67,15 +67,13 @@ def streamlit_image_coordinates(
             "Must pass a string, Path, numpy array or object with a save method"
         )
 
-    component_value = _component_func(
+    return _component_func(
         src=src,
         height=height,
         width=width,
         use_column_width=use_column_width,
         key=key,
     )
-
-    return component_value
 
 
 def main():

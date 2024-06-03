@@ -1,6 +1,5 @@
 import streamlit as st
 from PIL import Image, ImageDraw
-
 from streamlit_image_coordinates import streamlit_image_coordinates
 
 st.set_page_config(
@@ -29,20 +28,19 @@ def get_ellipse_coords(point: tuple[int, int]) -> tuple[int, int, int, int]:
     )
 
 
-with st.echo("below"):
-    with Image.open("kitty.jpeg") as img:
-        draw = ImageDraw.Draw(img)
+with st.echo("below"), Image.open("kitty.jpeg") as img:
+    draw = ImageDraw.Draw(img)
 
-        # Draw an ellipse at each coordinate in points
-        for point in st.session_state["points"]:
-            coords = get_ellipse_coords(point)
-            draw.ellipse(coords, fill="red")
+    # Draw an ellipse at each coordinate in points
+    for point in st.session_state["points"]:
+        coords = get_ellipse_coords(point)
+        draw.ellipse(coords, fill="red")
 
-        value = streamlit_image_coordinates(img, key="pil")
+    value = streamlit_image_coordinates(img, key="pil")
 
-        if value is not None:
-            point = value["x"], value["y"]
+    if value is not None:
+        point = value["x"], value["y"]
 
-            if point not in st.session_state["points"]:
-                st.session_state["points"].append(point)
-                st.experimental_rerun()
+        if point not in st.session_state["points"]:
+            st.session_state["points"].append(point)
+            st.experimental_rerun()

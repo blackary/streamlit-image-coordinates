@@ -47,11 +47,11 @@ function onRender(event) {
       } else if (!width) {
         width = height * img.naturalWidth / img.naturalHeight;
       }
-  
+
       img.width = width;
       img.height = height;
     }
-  
+
     Streamlit.setFrameHeight(img.height + 10);
   }
 
