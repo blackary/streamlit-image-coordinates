@@ -64,7 +64,7 @@ function onRender(event) {
       img.height = height;
     }
 
-    Streamlit.setFrameHeight(img.height + 10);
+    Streamlit.setFrameHeight(img.height);
   }
 
   img.onload = resizeImage;
