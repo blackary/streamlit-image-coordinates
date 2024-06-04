@@ -7,3 +7,7 @@
     width: 100%;
     height: auto;
 }
+
+img {
+    user-select: none;
+}

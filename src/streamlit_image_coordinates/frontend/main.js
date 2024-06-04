@@ -20,8 +20,20 @@ function clickListener(event) {
   sendValue({x: offsetX, y: offsetY, width: img.width, height: img.height});
 }
 
+function mouseDownListener(downEvent) {
+  const [x1, y1] = [downEvent.offsetX, downEvent.offsetY];
+
+  window.addEventListener("mouseup", (upEvent) => {
+    const [x2, y2] = [upEvent.clientX, upEvent.clientY];
+    const img = document.getElementById("image");
+    const rect = img.getBoundingClientRect();
+
+    sendValue({x1: x1, y1: y1, x2: x2 - rect.left, y2: y2 - rect.top, width: img.width, height: img.height});
+  }, {once: true})
+}
+
 function onRender(event) {
-  let {src, height, width, use_column_width} = event.detail.args;
+  let {src, height, width, use_column_width, click_and_drag} = event.detail.args;
 
   const img = document.getElementById("image");
 
@@ -59,7 +71,11 @@ function onRender(event) {
   window.addEventListener("resize", resizeImage);
 
   // When image is clicked, send the coordinates to Python through sendValue
-  if (!img.onclick) {
+  if (click_and_drag) {
+    img.onclick = null;
+    img.onmousedown = mouseDownListener;
+  } else {
+    img.onmousedown = null;
     img.onclick = clickListener;
   }
 }
