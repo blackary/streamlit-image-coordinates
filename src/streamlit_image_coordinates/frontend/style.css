@@ -15,3 +15,7 @@ img {
 body {
   margin: 0;
 }
+
+img {
+    user-select: none;
+}

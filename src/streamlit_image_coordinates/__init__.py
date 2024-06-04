@@ -25,6 +25,7 @@ def streamlit_image_coordinates(
     width: int | None = None,
     key: str | None = None,
     use_column_width: UseColumnWith | str | None = None,
+    click_and_drag: bool = False,
 ):
     """
     Take an image source and return the coordinates of the image clicked
@@ -38,11 +39,15 @@ def streamlit_image_coordinates(
     width : int | None
         The width of the image. If None, the width will be the original width
     use_column_width : "auto", "always", "never", or bool
-            If "auto", set the image's width to its natural size,
-            but do not exceed the width of the column.
-            If "always" or True, set the image's width to the column width.
-            If "never" or False, set the image's width to its natural size.
-            Note: if set, `use_column_width` takes precedence over the `width` parameter.
+        If "auto", set the image's width to its natural size,
+        but do not exceed the width of the column.
+        If "always" or True, set the image's width to the column width.
+        If "never" or False, set the image's width to its natural size.
+        Note: if set, `use_column_width` takes precedence over the `width` parameter.
+    click_and_drag: bool
+        If true, the event is not sent until the user releases the mouse. The
+        mouse down event is returned as x1, y1 and the mouse up event is returned
+        as x2, y2. Note that x2 and y2 may be outside the image.
     """
 
     if isinstance(source, (Path, str)):
@@ -73,6 +78,7 @@ def streamlit_image_coordinates(
         width=width,
         use_column_width=use_column_width,
         key=key,
+        click_and_drag=click_and_drag,
     )
 
 
