@@ -1,9 +1,17 @@
 .auto {
-    width: auto;
-    height: auto;
+  width: auto;
+  height: auto;
 }
 
 .fullWidth {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
+}
+
+img {
+  user-select: none;
+}
+
+body {
+  margin: 0;
 }
