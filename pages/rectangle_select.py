@@ -21,11 +21,15 @@ def get_rectangle_coords(
     points: tuple[tuple[int, int], tuple[int, int]],
 ) -> tuple[int, int, int, int]:
     point1, point2 = points
+    minx = min(point1[0], point2[0])
+    miny = min(point1[1], point2[1])
+    maxx = max(point1[0], point2[0])
+    maxy = max(point1[1], point2[1])
     return (
-        point1[0],
-        point1[1],
-        point2[0],
-        point2[1],
+        minx,
+        miny,
+        maxx,
+        maxy,
     )
 
 
