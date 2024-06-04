@@ -8,14 +8,10 @@
   height: auto;
 }
 
-img {
-  user-select: none;
-}
-
 body {
   margin: 0;
 }
 
 img {
-    user-select: none;
+  user-select: none;
 }
