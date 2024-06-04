@@ -29,6 +29,8 @@ def get_rectangle_coords(
     )
 
 
+st.write(st.session_state["coordinates"])
+
 with st.echo("below"), Image.open("kitty.jpeg") as img:
     draw = ImageDraw.Draw(img)
 
@@ -47,8 +49,6 @@ with st.echo("below"), Image.open("kitty.jpeg") as img:
         if point1 != point2 and st.session_state["coordinates"] != (point1, point2):
             st.session_state["coordinates"] = (point1, point2)
             st.rerun()
-
-    st.write(st.session_state["coordinates"])
     # Enlarge the rectangle selected between point1 and point2
     if st.session_state["coordinates"]:
         coords = get_rectangle_coords(st.session_state["coordinates"])
