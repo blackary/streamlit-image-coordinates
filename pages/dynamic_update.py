@@ -43,4 +43,4 @@ with st.echo("below"), Image.open("kitty.jpeg") as img:
 
         if point not in st.session_state["points"]:
             st.session_state["points"].append(point)
-            st.experimental_rerun()
+            st.rerun()
