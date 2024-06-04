@@ -46,8 +46,9 @@ with st.echo("below"), Image.open("kitty.jpeg") as img:
         point1 = value["x1"], value["y1"]
         point2 = value["x2"], value["y2"]
 
-        if point1 != point2 and st.session_state["coordinates"] != (point1, point2):
-            st.session_state["coordinates"] = (point1, point2)
+        if point1[0] != point2[0] and point1[1] != point2[1]:
+            if st.session_state["coordinates"] != (point1, point2):
+                st.session_state["coordinates"] = (point1, point2)
             st.rerun()
     # Enlarge the rectangle selected between point1 and point2
     if st.session_state["coordinates"]:
