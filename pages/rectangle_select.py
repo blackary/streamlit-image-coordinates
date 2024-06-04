@@ -49,6 +49,7 @@ with st.echo("below"), Image.open("kitty.jpeg") as img:
     if value is not None:
         point1 = value["x1"], value["y1"]
         point2 = value["x2"], value["y2"]
+        print(point1, point2)
 
         if point1[0] != point2[0] and point1[1] != point2[1]:
             if st.session_state["coordinates"] != (point1, point2):
