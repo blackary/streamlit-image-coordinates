@@ -14,6 +14,8 @@ st.code("pip install streamlit-image-coordinates")
 
 "Try clicking on any of the images below."
 
+st.write(st.session_state)
+
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
@@ -67,7 +69,7 @@ with st.echo("below"):
     value = streamlit_image_coordinates(
         "kitty.jpeg",
         key="local4",
-        use_column_width="always",
+        use_container_width=True,
         click_and_drag=True,
     )
 

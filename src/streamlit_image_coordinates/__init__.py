@@ -1,21 +1,13 @@
 from __future__ import annotations
 
-import base64
 from io import BytesIO
 from pathlib import Path
 
 import numpy as np
+import plotly.express as px
+import requests
 import streamlit as st
-import streamlit.components.v1 as components
 from PIL import Image
-from streamlit.elements.image import UseColumnWith
-
-# Tell streamlit that there is a component called streamlit_image_coordinates,
-# and that the code to display that component is in the "frontend" folder
-frontend_dir = (Path(__file__).parent / "frontend").absolute()
-_component_func = components.declare_component(
-    "streamlit_image_coordinates", path=str(frontend_dir)
-)
 
 
 # Create the python function that will be called
@@ -24,7 +16,7 @@ def streamlit_image_coordinates(
     height: int | None = None,
     width: int | None = None,
     key: str | None = None,
-    use_column_width: UseColumnWith | str | None = None,
+    use_container_width: bool = False,
     click_and_drag: bool = False,
 ):
     """
@@ -52,34 +44,64 @@ def streamlit_image_coordinates(
 
     if isinstance(source, (Path, str)):
         if not str(source).startswith("http"):
-            content = Path(source).read_bytes()
-            src = "data:image/png;base64," + base64.b64encode(content).decode("utf-8")
+            content = BytesIO(Path(source).read_bytes())
         else:
-            src = str(source)
-    elif hasattr(source, "save"):
-        buffered = BytesIO()
-        source.save(buffered, format="PNG")  # type: ignore
-        src = "data:image/png;base64,"
-        src += base64.b64encode(buffered.getvalue()).decode("utf-8")  # type: ignore
-    elif isinstance(source, np.ndarray):
-        image = Image.fromarray(source)
-        buffered = BytesIO()
-        image.save(buffered, format="PNG")  # type: ignore
-        src = "data:image/png;base64,"
-        src += base64.b64encode(buffered.getvalue()).decode("utf-8")  # type: ignore
+            content = BytesIO(requests.get(str(source)).content)
+        image = Image.open(content)
+    elif hasattr(source, "save") or isinstance(source, np.ndarray):
+        image = source
     else:
-        raise ValueError(
-            "Must pass a string, Path, numpy array or object with a save method"
+        raise ValueError("Must pass a string, Path, numpy array or a PIL image")
+
+    fig = px.imshow(image, height=height, width=width)
+
+    if click_and_drag:
+        fig.update_layout(
+            dragmode="select",
+            xaxis={"showticklabels": False},
+            yaxis={"showticklabels": False},
+            margin={"t": 0, "b": 0, "l": 0, "r": 0},
+            height=height,
+            width=width,
+            # modebar_add=[],
+            # modebar_display=False,
+        )
+    else:
+        fig.update_layout(
+            clickmode="select",
+            xaxis={"showticklabels": False},
+            yaxis={"showticklabels": False},
+            height=height,
+            width=width,
+            margin={"t": 0, "b": 0, "l": 0, "r": 0},
+            # modebar_add=[],
+            # modebar_display=False,
         )
 
-    return _component_func(
-        src=src,
-        height=height,
-        width=width,
-        use_column_width=use_column_width,
-        key=key,
-        click_and_drag=click_and_drag,
+    selection = st.plotly_chart(
+        fig,
+        on_select="rerun",
+        use_container_width=use_container_width,
+        config={
+            "displayModeBar": False,
+        },
+        key=key + "_plotly_chart",
+        selection_mode="box" if click_and_drag else "points",
     )
+
+    if click_and_drag and (selected_box := selection["selection"].get("box")):
+        st.write(selected_box[0])
+        x1, x2 = selected_box[0]["x"]
+        y1, y2 = selected_box[0]["y"]
+        st.session_state[key] = {
+            "x1": x1,
+            "x2": x2,
+            "y1": y1,
+            "y2": y2,
+        }
+        return st.session_state[key]
+
+    return selection["selection"]
 
 
 def main():

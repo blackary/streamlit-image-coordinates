@@ -33,16 +33,19 @@ def get_rectangle_coords(
     )
 
 
+st.write(st.session_state)
+
 with st.echo("below"), Image.open("kitty.jpeg") as img:
     draw = ImageDraw.Draw(img)
 
-    if st.session_state["coordinates"]:
-        coords = get_rectangle_coords(st.session_state["coordinates"])
-        draw.rectangle(coords, fill=None, outline="red", width=2)
+    # if st.session_state["coordinates"]:
+    #    coords = get_rectangle_coords(st.session_state["coordinates"])
+    #    draw.rectangle(coords, fill=None, outline="red", width=2)
 
     cols = st.columns([1, 1, 4])
     with cols[0]:
         value = streamlit_image_coordinates(img, key="rectangle", click_and_drag=True)
+        st.write(value)
 
     if value is not None:
         point1 = value["x1"], value["y1"]

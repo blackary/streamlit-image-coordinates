@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setuptools.setup(
     name="streamlit-image-coordinates",
-    version="0.1.9",
+    version="1.0.0",
     author="Zachary Blackwood",
     author_email="zachary@streamlit.io",
     description=(
@@ -33,6 +33,6 @@ setuptools.setup(
         "Programming Language :: Python :: 3.10",
     ],
     python_requires=">=3.7",
-    install_requires=["streamlit>=1.2", "jinja2"],
+    install_requires=["streamlit>=1.35", "plotly"],
     keywords="python streamlit images component",
 )
