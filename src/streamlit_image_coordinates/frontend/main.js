@@ -16,8 +16,9 @@ function sendValue(value) {
 function clickListener(event) {
   const {offsetX, offsetY} = event;
   const img = document.getElementById("image");
+  const unixTime = Date.now();
 
-  sendValue({x: offsetX, y: offsetY, width: img.width, height: img.height});
+  sendValue({x: offsetX, y: offsetY, width: img.width, height: img.height, unix_time: unixTime});
 }
 
 function mouseDownListener(downEvent) {
@@ -27,8 +28,11 @@ function mouseDownListener(downEvent) {
     const [x2, y2] = [upEvent.clientX, upEvent.clientY];
     const img = document.getElementById("image");
     const rect = img.getBoundingClientRect();
+    const unixTime = Date.now();
 
-    sendValue({x1: x1, y1: y1, x2: x2 - rect.left, y2: y2 - rect.top, width: img.width, height: img.height});
+    sendValue({x1: x1, y1: y1, x2: x2 - rect.left, y2: y2 - rect.top,
+    width: img.width, height: img.height, unix_time: unixTime});
+
   }, {once: true})
 }
 
@@ -70,7 +74,7 @@ function onRender(event) {
   img.onload = resizeImage;
   window.addEventListener("resize", resizeImage);
 
-  // When image is clicked, send the coordinates to Python through sendValue
+  // When image is clicked, send the coordinates and unix timestamp to Python, through sendValue
   if (click_and_drag) {
     img.onclick = null;
     img.onmousedown = mouseDownListener;
