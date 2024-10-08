@@ -11,7 +11,8 @@ Author: [@blackary](https://github.com/blackary)
 
 Code: https://github.com/blackary/streamlit-image-coordinates
 
-Streamlit component that displays an image and returns the coordinates when you click on it
+Streamlit component that displays an image and returns the coordinates when you click on it.
+Also returns click event time in unix format.
 
 ## Installation instructions
 
