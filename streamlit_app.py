@@ -21,7 +21,7 @@ with col1:
 
     with st.echo("below"):
         value = streamlit_image_coordinates(
-            "https://placekitten.com/200/300",
+            "https://placecats.com/200/300",
             key="url",
         )
 
