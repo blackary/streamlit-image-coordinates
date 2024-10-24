@@ -28,7 +28,8 @@ def streamlit_image_coordinates(
     click_and_drag: bool = False,
 ):
     """
-    Take an image source and return the coordinates of the image clicked
+    Take an image source and return the coordinates of the image clicked.
+    Also returns click event time in unix format.
 
     Parameters
     ----------

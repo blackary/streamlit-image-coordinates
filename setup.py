@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setuptools.setup(
     name="streamlit-image-coordinates",
-    version="0.1.9",
+    version="0.2.0",
     author="Zachary Blackwood",
     author_email="zachary@streamlit.io",
     description=(
