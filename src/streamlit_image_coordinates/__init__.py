@@ -26,6 +26,7 @@ def streamlit_image_coordinates(
     key: str | None = None,
     use_column_width: UseColumnWith | str | None = None,
     click_and_drag: bool = False,
+    compress_level: int = 0,
 ):
     """
     Take an image source and return the coordinates of the image clicked.
@@ -49,6 +50,9 @@ def streamlit_image_coordinates(
         If true, the event is not sent until the user releases the mouse. The
         mouse down event is returned as x1, y1 and the mouse up event is returned
         as x2, y2. Note that x2 and y2 may be outside the image.
+    compress_level: int
+        ZLIB compression level for PNG images, a number between 0 and 9: 1 gives best
+        speed, 9 gives best compression, 0 gives no compression at all.
     """
 
     if isinstance(source, (Path, str)):
@@ -59,13 +63,13 @@ def streamlit_image_coordinates(
             src = str(source)
     elif hasattr(source, "save"):
         buffered = BytesIO()
-        source.save(buffered, format="PNG")  # type: ignore
+        source.save(buffered, format="PNG", compress_level=compress_level)  # type: ignore
         src = "data:image/png;base64,"
         src += base64.b64encode(buffered.getvalue()).decode("utf-8")  # type: ignore
     elif isinstance(source, np.ndarray):
         image = Image.fromarray(source)
         buffered = BytesIO()
-        image.save(buffered, format="PNG")  # type: ignore
+        image.save(buffered, format="PNG", compress_level=compress_level)  # type: ignore
         src = "data:image/png;base64,"
         src += base64.b64encode(buffered.getvalue()).decode("utf-8")  # type: ignore
     else:
