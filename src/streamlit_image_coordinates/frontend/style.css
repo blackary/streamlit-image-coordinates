@@ -15,3 +15,7 @@ body {
 img {
   user-select: none;
 }
+
+#image-container {
+  overflow-x: scroll;
+}
