@@ -1,10 +1,10 @@
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.12
+    rev: v0.11.13
     hooks:
-      - id: ruff
-        args:
-          - --fix
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: "v1.16.0"
     hooks:
@@ -13,6 +13,6 @@ repos:
           - --ignore-missing-imports
           - --follow-imports=silent
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0 # Use the ref you want to point at
+    rev: v4.6.0 # Use the ref you want to point at
     hooks:
       - id: trailing-whitespace

@@ -30,6 +30,12 @@ def get_ellipse_coords(point: tuple[int, int]) -> tuple[int, int, int, int]:
 
 
 with st.echo("below"), Image.open("kitty.jpeg") as img:
+
+    def add_point():
+        raw_value = st.session_state["pil"]
+        value = raw_value["x"], raw_value["y"]
+        st.session_state["points"].append(value)
+
     draw = ImageDraw.Draw(img)
 
     # Draw an ellipse at each coordinate in points
@@ -37,11 +43,4 @@ with st.echo("below"), Image.open("kitty.jpeg") as img:
         coords = get_ellipse_coords(point)
         draw.ellipse(coords, fill="red")
 
-    value = streamlit_image_coordinates(img, key="pil")
-
-    if value is not None:
-        point = value["x"], value["y"]
-
-        if point not in st.session_state["points"]:
-            st.session_state["points"].append(point)
-            st.rerun()
+    value = streamlit_image_coordinates(img, key="pil", on_click=add_point)
