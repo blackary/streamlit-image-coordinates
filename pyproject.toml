@@ -1,3 +1,30 @@
+[project]
+name = "streamlit-image-coordinates"
+version = "0.3.0"
+description = "Streamlit component that displays an image and returns the coordinates when you click on it"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["streamlit>=1.34"]
+authors = [{ name = "Zachary Blackwood", email = "zachary@streamlit.io" }]
+license = { file = "LICENSE" }
+keywords = ["python", "streamlit", "images", "component", "streamlit-component"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+packages = ["streamlit_image_coordinates"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [tool.ruff]
 exclude = [".git", ".vscode", ".pytest_cache", ".mypy_cache", ".env"]
 line-length = 88

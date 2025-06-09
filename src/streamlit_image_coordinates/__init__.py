@@ -3,6 +3,7 @@ from __future__ import annotations
 import base64
 from io import BytesIO
 from pathlib import Path
+from typing import Callable
 
 import numpy as np
 import streamlit as st
@@ -29,6 +30,7 @@ def streamlit_image_coordinates(
     image_format: str = "PNG",
     png_compression_level: int = 0,
     jpeg_quality: int = 75,
+    on_click: Callable[[], None] | None = None,
 ):
     """
     Take an image source and return the coordinates of the image clicked.
@@ -77,9 +79,7 @@ def streamlit_image_coordinates(
             source.save(buffered, format="JPEG", quality=jpeg_quality)  # type: ignore
             src = "data:image/jpeg;base64,"
         else:
-            raise ValueError(
-                "Only 'PNG' and 'JPEG' image formats are supported. "
-            )
+            raise ValueError("Only 'PNG' and 'JPEG' image formats are supported. ")
         src += base64.b64encode(buffered.getvalue()).decode("utf-8")  # type: ignore
     elif isinstance(source, np.ndarray):
         image = Image.fromarray(source)
@@ -91,9 +91,7 @@ def streamlit_image_coordinates(
             image.save(buffered, format="JPEG", quality=jpeg_quality)  # type: ignore
             src = "data:image/jpeg;base64,"
         else:
-            raise ValueError(
-                "Only 'PNG' and 'JPEG' image formats are supported. "
-            )
+            raise ValueError("Only 'PNG' and 'JPEG' image formats are supported. ")
         src += base64.b64encode(buffered.getvalue()).decode("utf-8")  # type: ignore
     else:
         raise ValueError(
@@ -107,7 +105,9 @@ def streamlit_image_coordinates(
         use_column_width=use_column_width,
         key=key,
         click_and_drag=click_and_drag,
+        on_change=on_click,
     )
+
 
 def main():
     st.set_page_config(
