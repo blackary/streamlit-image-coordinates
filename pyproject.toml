@@ -1,6 +1,6 @@
 [project]
 name = "streamlit-image-coordinates"
-version = "0.3.0"
+version = "0.3.1"
 description = "Streamlit component that displays an image and returns the coordinates when you click on it"
 readme = "README.md"
 requires-python = ">=3.10"
