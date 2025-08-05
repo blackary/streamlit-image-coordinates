@@ -31,6 +31,7 @@ def streamlit_image_coordinates(
     png_compression_level: int = 0,
     jpeg_quality: int = 75,
     on_click: Callable[[], None] | None = None,
+    cursor: str = "auto",
 ):
     """
     Take an image source and return the coordinates of the image clicked.
@@ -62,6 +63,9 @@ def streamlit_image_coordinates(
     jpeg_quality: int
         The quality of the JPEG image. The value should be between 0 and 95. The
         higher the value, the higher the quality of the image.
+    cursor: str
+        The cursor style to use when hovering over the image. Supported values:
+        "auto" (default), "crosshair", "pointer", "default", "none", "grab", "zoom-in".
     """
 
     if isinstance(source, (Path, str)):
@@ -106,6 +110,7 @@ def streamlit_image_coordinates(
         key=key,
         click_and_drag=click_and_drag,
         on_change=on_click,
+        cursor=cursor,
     )
 
 
