@@ -62,6 +62,25 @@ with col4:
 
         st.write(value)
 
+st.write("## Cursor style example")
+
+cursor_style = st.radio(
+    "Choose cursor style:",
+    ["auto", "crosshair", "pointer", "zoom-in"],
+    index=1,
+    horizontal=True,
+)
+
+with st.echo("below"):
+    value = streamlit_image_coordinates(
+        "kitty.jpeg",
+        key=f"cursor_{cursor_style}",
+        width=300,
+        cursor=cursor_style,
+    )
+
+    st.write(value)
+
 st.write("## Full width example with click and drag")
 
 with st.echo("below"):

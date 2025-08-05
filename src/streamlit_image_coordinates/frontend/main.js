@@ -37,7 +37,7 @@ function mouseDownListener(downEvent) {
 }
 
 function onRender(event) {
-  let {src, height, width, use_column_width, click_and_drag} = event.detail.args;
+  let {src, height, width, use_column_width, click_and_drag, cursor} = event.detail.args;
 
   const img = document.getElementById("image");
 
@@ -73,6 +73,11 @@ function onRender(event) {
 
   img.onload = resizeImage;
   window.addEventListener("resize", resizeImage);
+
+  // Apply cursor style
+  if (cursor) {
+    img.style.cursor = cursor;
+  }
 
   // When image is clicked, send the coordinates and unix timestamp to Python, through sendValue
   if (click_and_drag) {
