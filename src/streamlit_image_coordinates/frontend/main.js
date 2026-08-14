@@ -72,7 +72,6 @@ function onRender(event) {
   }
 
   img.onload = resizeImage;
-  window.addEventListener("resize", resizeImage);
 
   // Apply cursor style
   if (cursor) {

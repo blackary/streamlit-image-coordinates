@@ -3,13 +3,20 @@ from __future__ import annotations
 import base64
 from io import BytesIO
 from pathlib import Path
-from typing import Callable
+from typing import TYPE_CHECKING, Callable
 
 import numpy as np
 import streamlit as st
 import streamlit.components.v1 as components
 from PIL import Image
-from streamlit.elements.image import UseColumnWith
+
+if TYPE_CHECKING:
+    try:
+        from streamlit.elements.image import UseColumnWith
+    except ImportError:
+        from typing import Literal
+
+        UseColumnWith = Literal["auto", "always", "never"] | bool | None
 
 # Tell streamlit that there is a component called streamlit_image_coordinates,
 # and that the code to display that component is in the "frontend" folder
@@ -25,7 +32,7 @@ def streamlit_image_coordinates(
     height: int | None = None,
     width: int | None = None,
     key: str | None = None,
-    use_column_width: UseColumnWith | str | None = None,
+    use_column_width: UseColumnWith | None = None,
     click_and_drag: bool = False,
     image_format: str = "PNG",
     png_compression_level: int = 0,
