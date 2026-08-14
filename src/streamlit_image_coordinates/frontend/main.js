@@ -50,9 +50,9 @@ function onRender(event) {
     img.removeAttribute("width");
     img.removeAttribute("height");
 
-    if (use_column_width === "always" || use_column_width === true) {
+    if (use_column_width === "always" || use_column_width === true || width === "stretch") {
       img.classList.add("fullWidth");
-    } else if (use_column_width === "auto") {
+    } else if (use_column_width === "auto" || width === "content") {
       img.classList.add("auto");
     } else {
       if (!width && !height) {
@@ -72,7 +72,6 @@ function onRender(event) {
   }
 
   img.onload = resizeImage;
-  window.addEventListener("resize", resizeImage);
 
   // Apply cursor style
   if (cursor) {
