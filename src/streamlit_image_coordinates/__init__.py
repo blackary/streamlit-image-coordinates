@@ -3,7 +3,7 @@ from __future__ import annotations
 import base64
 from io import BytesIO
 from pathlib import Path
-from typing import TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING, Callable, Literal
 
 import numpy as np
 import streamlit as st
@@ -30,7 +30,7 @@ _component_func = components.declare_component(
 def streamlit_image_coordinates(
     source: str | Path | np.ndarray | object,
     height: int | None = None,
-    width: int | None = None,
+    width: int | Literal["stretch", "content"] | None = None,
     key: str | None = None,
     use_column_width: UseColumnWith | None = None,
     click_and_drag: bool = False,
@@ -50,8 +50,13 @@ def streamlit_image_coordinates(
         The image source
     height : int | None
         The height of the image. If None, the height will be the original height
-    width : int | None
-        The width of the image. If None, the width will be the original width
+    width : int | "stretch" | "content" | None
+        The width of the image. If an integer, sets the pixel width.
+        "stretch" fills the column width (equivalent to use_column_width="always").
+        "content" uses the image's natural size without exceeding the column width
+        (equivalent to use_column_width="auto").
+        If None, the natural width is used (unless use_column_width is set).
+        Note: if use_column_width is set, it takes precedence over width.
     use_column_width : "auto", "always", "never", or bool
         If "auto", set the image's width to its natural size,
         but do not exceed the width of the column.
