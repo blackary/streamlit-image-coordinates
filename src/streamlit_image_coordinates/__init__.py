@@ -12,11 +12,11 @@ from PIL import Image
 
 if TYPE_CHECKING:
     try:
-        from streamlit.elements.image import UseColumnWith
+        from streamlit.elements.image import UseColumnWith  # type: ignore[attr-defined]
     except ImportError:
         from typing import Literal
 
-        UseColumnWith = Literal["auto", "always", "never"] | bool | None
+        UseColumnWith = Literal["auto", "always", "never"] | bool | None  # type: ignore[misc,no-redef]
 
 # Tell streamlit that there is a component called streamlit_image_coordinates,
 # and that the code to display that component is in the "frontend" folder
