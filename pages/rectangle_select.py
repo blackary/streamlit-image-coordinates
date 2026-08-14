@@ -64,4 +64,4 @@ with st.echo("below"), Image.open("kitty.jpeg") as img:
             (int(new_image.width * 1.5), int(new_image.height * 1.5))
         )
         with cols[1]:
-            st.image(new_image, use_column_width=False)
+            st.image(new_image, width="content")
